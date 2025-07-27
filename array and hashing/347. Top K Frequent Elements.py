@@ -60,3 +60,22 @@ class Solution:
                 heapq.heappop(heap)
 
         return [ans[1] for ans in heap]
+
+    def approach3(self, nums: List[int], k: int) -> List[int]:
+        """
+        Time Complexity: O(n)
+        Space Complexity: O(n + k)
+        """
+        freq = Counter(nums)  # O(n)
+        bucket = [[] for _ in range(len(nums) + 1)]  # O(n)
+
+        result = []  # O(k)
+        for num, freq in freq.items():  # O(n)
+            bucket[freq].append(num)  # O(1)
+
+        for i in range(len(bucket) - 1, -1, -1):  # O(n)
+            for num in bucket[i]:
+                if k > 0:
+                    result.append(num)
+                    k -= 1
+        return result
